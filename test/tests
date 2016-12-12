@@ -3,19 +3,14 @@ var dweet=require("dweet");
 try{
 
   var d=new dweet.Dweet("wildthing");
-  
-  /*for (var i = 0; i < 3; i++) {
-    
-     var cont={
-      "hello":"world",
-      "count": "count = " + i
-    }
+  var cont={
+    "hello":"world",
+    "count": "count = " + i
+  }
 
-    d.postDweet(cont);
-  } */
-  
+  d.postDweet(cont);
+   
   //return d.getLatestDweet();
-  
   return d.listLatestDweets();
 } catch (err){
   return err;
