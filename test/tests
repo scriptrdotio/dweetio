@@ -1,4 +1,4 @@
-var dweet=require("dweet.io/dweet");
+var dweet=require("dweetio/dweet");
 
 try{
 

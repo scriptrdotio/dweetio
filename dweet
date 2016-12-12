@@ -19,7 +19,7 @@ function Dweet(thingName){
 /**
  * Post a dweet
  * @method postDweet
- * @param {Object} [thingContent] : the content of the dweet to post
+ * @param {Object} [thingContent] : the content of the dweet to post. Can also be posted as a query string ("param1=value1&param2=value3")
  * @param {boolean} quiet: successful dweets result in an HTTP 204 response
  * @return {Object} dweet
  * @throws Error
@@ -33,12 +33,19 @@ Dweet.prototype.postDweet=function(thingContent,quiet){
       errorDetail: "thingContent cannot be null or empty."
     }
   }
-  if(typeof(thingContent) != "object" || Object.keys(thingContent).length==0){
-    throw {
-      erroCode: "Invalid_Parameter",
-      errorDetail: "thingContent has to be a non-empty JSON object."
+  
+  if(typeof(thingContent) == "string") {
+    thingContent = _parseQueryStr(thingContent);
+  }else {
+    
+  	if(typeof(thingContent) != "object" || Object.keys(thingContent).length==0){
+      throw {
+        erroCode: "Invalid_Parameter",
+        errorDetail: "thingContent has to be a non-empty JSON object."
+      }
     }
-  }
+  }  
+  
   if(!quiet){
   	var url=config.postURL + this.name;
   	var query={
@@ -78,3 +85,17 @@ Dweet.prototype.getLatestDweet = function(){
     return this.client.callApi(query);
   }
 };
+
+function _parseQueryStr(querystr) {
+  
+  var keyvalues = querystr.split("&");
+  var obj = {};
+  for (var index in keyvalues) {
+
+    var tuple = keyvalues[index];console.log(keyvalues[index])
+    var kv = tuple.split("=");
+    obj[kv[0]] = kv[1];
+  }
+
+  return obj;
+}
