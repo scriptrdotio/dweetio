@@ -1,7 +1,7 @@
 var http=require("http");
-var config=require("dweet.io/config.js");
-var client=require("dweet.io/client.js");
-var stub=require("dweet.io/stub");
+var config=require("./config");
+var client=require("./client");
+var stub=require("/stub");
 
 /**
  * A mix of all the other scripts into one class to make the code more reusable
@@ -66,7 +66,7 @@ Dweet.prototype.postDweet=function(thingContent,quiet){
 
 /**
  * Get all the dweets of a thing
- * @method getDweet
+ * @method getLatestDweet
  * @return {Object} dweet
  * @throws Error
  */
@@ -82,7 +82,29 @@ Dweet.prototype.getLatestDweet = function(){
       url:url
     };
        
-    return this.client.callApi(query);
+    return this.client.callApi(query).with;
+  }
+};
+
+/**
+ * Get all the dweets of a thing
+ * @method listLatestDweets
+ * @return {Array} dweet
+ * @throws Error
+ */
+
+Dweet.prototype.listLatestDweets = function(){ 
+  
+  if(config.mode=="stub"){
+    return stub.getDweet();
+  } else {
+    
+    var url=config.listLatestDweetsURL + this.name;
+    var query={
+      url:url
+    };
+       
+    return this.client.callApi(query).with;
   }
 };
 

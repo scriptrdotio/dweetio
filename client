@@ -1,5 +1,5 @@
 var http=require("http");
-var config=require("dweet.io/config.js");
+var config=require("./config");
 var pubsub=require("pubsub");
 
 /**

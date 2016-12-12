@@ -7,6 +7,9 @@ var postQuietlyURL="http://dweet.io/dweet/quietly/for/";
 //The URL of get latest dweet
 var getLatestDweetURL="https://dweet.io/get/latest/dweet/for/";
 
+//The URL of list latest dweets
+var listLatestDweetsURL="https://dweet.io/get/dweets/for/";
+
 //The frequency of the "monitor" script schedule
 var frequency="*/1 * * * ?";
 
