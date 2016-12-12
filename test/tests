@@ -1,0 +1,16 @@
+var dweet=require("dweet.io/dweet");
+
+try{
+
+  var d=new dweet.Dweet("wildthing");
+  var cont={
+    "hello":"world",
+    "dvdf":"testss"
+  }
+  
+  d.postDweet(cont);
+  
+  return d.getLatestDweet();
+} catch (err){
+  return err;
+}
