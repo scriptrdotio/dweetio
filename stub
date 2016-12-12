@@ -1,0 +1,94 @@
+var dweet1 = {
+  "this": "succeeded",
+  "by": "getting",
+  "the": "dweets",
+  "with": [
+    {
+      "thing": "my-thing-name",
+      "created": "2016-08-01T10:16:26.095Z",
+      "content": {
+        "hello": "world",
+        "foo": "bar"
+      }
+    }
+  ]
+}
+
+
+var dweet2 = {
+  "this": "succeeded",
+  "by": "getting",
+  "the": "dweets",
+  "with": [
+    {
+      "thing": "test",
+      "created": "2016-08-01T11:43:09.613Z",
+      "content": {
+        "level": 3
+      }
+    }
+  ]
+}
+
+
+var dweet3 = {
+  "this": "succeeded",
+  "by": "getting",
+  "the": "dweets",
+  "with": [
+    {
+      "thing": "my-thing-name",
+      "created": "2016-08-01T07:34:26.280Z",
+      "content": {
+        "hello": "world"
+      }
+    }
+  ]
+}
+
+
+var dweet4 = {
+  "this": "succeeded",
+  "by": "getting",
+  "the": "dweets",
+  "with": [
+    {
+      "thing": "my-thing-name",
+      "created": "2016-08-01T07:34:26.280Z",
+      "content": {
+        "hello": "world",
+        "dwdw": "wfd"
+      }
+    }
+  ]
+}
+
+
+var dweet5 = {
+  "this": "succeeded",
+  "by": "getting",
+  "the": "dweets",
+  "with": [
+    {
+      "thing": "my-thing-name",
+      "created": "2016-08-01T07:34:26.280Z",
+      "content": {
+        "hello": "world",
+        "dikj": "testt"
+      }
+    }
+  ]
+}
+
+var temp=new Array();
+temp[0]=dweet1;
+temp[1]=dweet2;
+temp[2]=dweet3;
+temp[3]=dweet4;
+temp[4]=dweet5;
+
+
+
+function getDweet(){
+  return temp[Math.floor(Math.random()*5)];
+}

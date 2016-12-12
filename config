@@ -1,0 +1,23 @@
+// The URL of post dweet
+var postURL="http://dweet.io/dweet/for/";
+
+// The URL of post quietly dweet
+var postQuietlyURL="http://dweet.io/dweet/quietly/for/";
+
+//The URL of get latest dweet
+var getLatestDweetURL="https://dweet.io/get/latest/dweet/for/";
+
+//The frequency of the "monitor" script schedule
+var frequency="*/1 * * * ?";
+
+//The name of the publish/subscribe channel
+var chanName="dweet";
+
+//The options of the publish/subscribe channel
+var options = {
+  "subscribeACL": "anonymous",
+  "publishACL": "authenticated"
+}
+
+
+var mode="";

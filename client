@@ -1,0 +1,44 @@
+var http=require("http");
+var config=require("dweet.io/config.js");
+var pubsub=require("pubsub");
+
+/**
+ * A generic http client that handles the communication with remote APIs
+ * All subsequent operations made using the current instance are done on behalf of the user
+ * @class Client
+ * @constructor
+ */
+
+function Client(){
+}
+
+/**
+ * Invoke a given API.
+ * @method callApi
+ * @param {Object} [params] : the parameters of the http call to issue
+ * @param {String} [params.endpoint] : the url of the targeted API
+ * @param {String} [params.method] : (optional) the http method to use when invoking the API
+ * @param {Object} [params.params]: (optional) the parameters that are expected by the API
+ * @throws error
+ */
+
+Client.prototype.callApi=function(params){
+  
+  //console.log("params "+ JSON.stringify(params) );
+  var reponse=http.request(params);
+  //console.log("reponse "+ JSON.stringify(reponse) );
+  if (reponse.status >= 200 && reponse.status < 300){
+        var rep=JSON.parse(reponse.body);
+      	if(rep.with >= 300){
+          throw {            
+            "errorCode": rep.with,
+            "errorDetail": JSON.stringify(rep)
+          }
+        }
+    }else throw {
+      "errorCode": "Invocation_Error",
+      "errorDetail": JSON.stringify(reponse.body)
+    }
+
+  return rep;
+ }

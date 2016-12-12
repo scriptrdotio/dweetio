@@ -1,0 +1,80 @@
+var http=require("http");
+var config=require("dweet.io/config.js");
+var client=require("dweet.io/client.js");
+var stub=require("dweet.io/stub");
+
+/**
+ * A mix of all the other scripts into one class to make the code more reusable
+ * @class Dweet
+ * @constructor
+ * @param {String} thingName : the thing name
+ * @throws Error
+ */
+
+function Dweet(thingName){
+  this.name=thingName;
+  this.client = new client.Client();
+}
+
+/**
+ * Post a dweet
+ * @method postDweet
+ * @param {Object} [thingContent] : the content of the dweet to post
+ * @param {boolean} quiet: successful dweets result in an HTTP 204 response
+ * @return {Object} dweet
+ * @throws Error
+ */
+
+Dweet.prototype.postDweet=function(thingContent,quiet){
+  
+  if(!thingContent){
+    throw {
+      erroCode: "Missing_Parameter",
+      errorDetail: "thingContent cannot be null or empty."
+    }
+  }
+  if(typeof(thingContent) != "object" || Object.keys(thingContent).length==0){
+    throw {
+      erroCode: "Invalid_Parameter",
+      errorDetail: "thingContent has to be a non-empty JSON object."
+    }
+  }
+  if(!quiet){
+  	var url=config.postURL + this.name;
+  	var query={
+   	 url:url,
+   	 method:"POST",
+   	 params:thingContent
+    }
+  }else {
+    var url=config.postQuietlyURL + this.name;
+    var query={
+      url:url,
+      method:"POST",
+      params:thingContent
+    }
+  }
+  return this.client.callApi(query);
+}
+
+/**
+ * Get all the dweets of a thing
+ * @method getDweet
+ * @return {Object} dweet
+ * @throws Error
+ */
+
+Dweet.prototype.getLatestDweet = function(){ 
+  
+  if(config.mode=="stub"){
+    return stub.getDweet();
+  } else {
+    
+    var url=config.getLatestDweetURL + this.name;
+    var query={
+      url:url
+    };
+       
+    return this.client.callApi(query);
+  }
+};
