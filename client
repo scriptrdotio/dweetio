@@ -35,6 +35,13 @@ Client.prototype.callApi=function(params){
             "errorDetail": JSON.stringify(rep)
           }
         }
+    	if (rep.this == "failed") {
+          throw {
+            "errorCode": "Invocation_Error",
+            "errorDetail": rep.because
+          }
+        }
+    
     }else throw {
       "errorCode": "Invocation_Error",
       "errorDetail": JSON.stringify(reponse.body)

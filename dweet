@@ -108,6 +108,30 @@ Dweet.prototype.listLatestDweets = function(){
   }
 };
 
+/**
+ *
+ */
+
+Dweet.prototype.addAlert = function(dto) {  
+  
+  if (!dto || !dto.recipients || !dto.name || !dto.key){
+      
+    throw {
+      erroCode: "Invalid_Parameter",
+      errorDetail: "dto.recipients, dto.name and dto.key are mandatory"
+    };
+  }
+  
+  var to = encodeURIComponent(dto.recipients.toString());
+  var url = config.alertURL + to + "/when/" + dto.name + "/" +  encodeURIComponent(dto.condition);
+  var query={
+    url:url,
+    params: {"key":dto.key}  
+    };
+       
+    return this.client.callApi(query).with;    
+}
+
 function _parseQueryStr(querystr) {
   
   var keyvalues = querystr.split("&");
