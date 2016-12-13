@@ -10,6 +10,12 @@ var getLatestDweetURL="https://dweet.io/get/latest/dweet/for/";
 //The URL of list latest dweets
 var listLatestDweetsURL="https://dweet.io/get/dweets/for/";
 
+// Alert creation URL prefix
+var alertURL = "https://dweet.io/alert/";
+
+// Remove alert URL prefix
+var removeAlertURL = "https://dweet.io/remove/alert/for/";
+
 //The frequency of the "monitor" script schedule
 var frequency="*/1 * * * ?";
 

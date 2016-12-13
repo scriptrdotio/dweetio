@@ -8,11 +8,13 @@ var stub=require("/stub");
  * @class Dweet
  * @constructor
  * @param {String} thingName : the thing name
+ * @param {String} thingKey : the thing key (optional, obtained if thing is locked)
  * @throws Error
  */
 
-function Dweet(thingName){
+function Dweet(thingName, thingKey){
   this.name=thingName;
+  this.key = thingKey;
   this.client = new client.Client();
 }
 
@@ -109,28 +111,49 @@ Dweet.prototype.listLatestDweets = function(){
 };
 
 /**
- *
+ * Add an alert on a device. Everytime the device publishes data, the expression is avaluated against it. 
+ * If evaluating the expression is true, an email is sent to all recipients.
+ * Expression can return true/false ("dweet.temp > 22") or a string ("if (dweet.temp > 33 && dweet.humidity > 80) return \"tropical\";") 
+ * Note: only available for locked devices
+ * @method addAlert
+ * @param {Object} [dto]
+ * @param {String} [dto.recipients]: a comma separated list of emails (can also be sent as an array)
+ * @param {String} [dto.expression]:  a JavaScript expression  
  */
 
 Dweet.prototype.addAlert = function(dto) {  
   
-  if (!dto || !dto.recipients || !dto.name || !dto.key){
+  if (!dto || !dto.recipients || !dto.expression){
       
     throw {
       erroCode: "Invalid_Parameter",
-      errorDetail: "dto.recipients, dto.name and dto.key are mandatory"
+      errorDetail: "dto.recipients and dto.expression are mandatory"
     };
   }
   
   var to = encodeURIComponent(dto.recipients.toString());
-  var url = config.alertURL + to + "/when/" + dto.name + "/" +  encodeURIComponent(dto.condition);
+  var url = config.alertURL + to + "/when/" + this.name + "/" +  encodeURIComponent(dto.expression);
   var query={
     url:url,
-    params: {"key":dto.key}  
+    params: {"key":this.key}  
     };
        
-    return this.client.callApi(query).with;    
-}
+  return this.client.callApi(query).with;    
+};
+
+/**
+ * @method removeAlert
+ */
+Dweet.prototype.removeAlert = function() {  
+  
+  var url = config.removeAlertURL + this.name;
+  var query={
+    url:url,
+    params: {"key":this.key}  
+    };
+       
+  return this.client.callApi(query).with;    
+};
 
 function _parseQueryStr(querystr) {
   
